@@ -6,35 +6,55 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
+@RequestMapping("/calculator")
 
 public class CalculatController {
-  private  final CalculateServis calculateServis;
+    private final CalculateServis calculateServis;
 
-  CalculatController(CalculateServis calculateServis){
-      this.calculateServis = calculateServis;
-  }
+    CalculatController(CalculateServis calculateServis) {
+        this.calculateServis = calculateServis;
+    }
 
 
-@GetMapping
-public String helloCalculayter(){
-    return calculateServis.helloCalculayter();
+    @GetMapping
+    public String helloCalculayter() {
+        return calculateServis.helloCalculayter();
+    }
+
+    @GetMapping(path = "/plus")
+    public String plusCalculayter(@RequestParam("number1") int number1,
+                                  @RequestParam("number2") int number2) {
+        if (number1 == 0 || number2 == 0) {return ("НУЖНО ВВЕСТИ ЗНАЧЕНИЕ number НЕ 0");}
+        int plus = calculateServis.plusCalculayter(number1, number2);
+        return " number1  " + number1 + "  number2  " + number2 + "  = " + plus;
+    }
+
+    @GetMapping(path = "/minus")
+    public String minusCalculayter(@RequestParam("number1") int number1,
+                                   @RequestParam("number2") int number2) {
+        if (number1 == 0 || number2 == 0) {return(" НУЖНО ВВЕСТИ ЗНАЧЕНИЕ number а  НЕ 0");}
+        int minus = calculateServis.minusCalculayter(number1, number2);
+        return " number1  " + number1 + "  number2  " + number2 + "  = " + minus;
+
+    }
+
+    @GetMapping(path = "/multi")
+    public String multiCalculayter(@RequestParam("number1") int number1,
+                                   @RequestParam("number2") int number2) {
+        if (number1 == 0 || number2 == 0) {return("НУЖНО ВВЕСТИ ЗНАЧЕНИЕ number НЕ 0");}
+        int multi = calculateServis.multiCalculayter(number1, number2);
+        return " number1  " + number1 + "  number2  " + number2 + "  = " + multi;
+
+    }
+
+    @GetMapping(path = "/divide")
+    public String divideCalculayter(@RequestParam("number1") int number1,
+                                    @RequestParam("number2") int number2) {
+        if (number1 == 0 || number2 == 0) {return ("НУЖНО ВВЕСТИ ЗНАЧЕНИЕ number а НЕ 0");}
+        if (number2 == 0) {return ("ДЕЛИТЬ НА НОЛЬ НЕЛЬЗЯ");}
+            int divide = calculateServis.divideCalculayter(number1, number2);
+            return " number1  " + number1 + "  number2  " + number2 + "  = " + divide;
+    }
 }
-    @GetMapping(path = "/calculator/plus")
-    public int plusCalculayter(@RequestParam("name1")int number1,@RequestParam("name2")int number2 ){
-        return calculateServis.plusCalculayter(number1,number2);
-    }
-    @GetMapping(path = "/calculator/minus")
-    public int minusCalculayter(@RequestParam("name1")int number1,@RequestParam("name2")int number2 ){
-        return calculateServis.minusCalculayter(number1,number2);
-    }
-    @GetMapping(path = "/calculator/multi")
-    public int multiCalculayter(@RequestParam("name1")int number1,@RequestParam("name2")int number2 ){
-        return calculateServis.multisCalculayter(number1,number2);
-    }
-    @GetMapping(path = "/calculator/divide")
-    public int divideCalculayter(@RequestParam("name1")int number1,@RequestParam("name2")int number2 ){
-        return calculateServis.dividesCalculayter(number1,number2);
-    }
 
-}
+
